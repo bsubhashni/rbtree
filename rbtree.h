@@ -11,6 +11,8 @@
 
 #define SET_RED(_n) ((_n)->color = 1)
 #define SET_BLACK(_n) ((_n)->color = 0)
+#define RED 1
+#define BLACK 0
 
 typedef struct RBTreeNode {
 	RBTreeNode *parent;
