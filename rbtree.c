@@ -83,9 +83,35 @@ static void insert_fixup(RBTree *tree, RBTreeNode *node){
     while(node->parent->color == RED){
         if(node->parent == node->parent->parent->left){
             uncle = node->parent->parent->right;    
+
+            if(uncle->color == RED){
+                SET_BLACK(node->parent);
+                SET_BLACK(uncle);
+                SET_RED(node->parent->parent);
+                node = node->parent->parent;
+            } else if (node == node->parent->right){
+                node = node->parent;
+                left_rotate(tree, node);
+                SET_BLACK(node->parent);
+                SET_RED(node->parent->parent);
+                right_rotate(tree, node->parent->parent);
+            }
         }
-        if(uncle->color == RED){
-            node->parent
+        else{
+            uncle = node->parent->parent->left;
+            if(uncle->color == RED){
+                SET_BLACK(node->parent);
+                SET_BLACK(uncle);
+                SET_RED(node->parent->parent);
+                node = node->parent->parent;
+            }
+            else if (node == node->parent->left){
+                node = node->parent;
+                right_rotate(tree, node);
+                SET_BLACK(node->parent);
+                SET_RED(node->parent->parent);
+                left_rotate(tree, node->parent->parent);
+            }
         }
     }
     return;
